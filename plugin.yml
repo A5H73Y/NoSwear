@@ -1,0 +1,10 @@
+name: NoSwear
+main: me.A5H73Y.NoSwear.NoSwear
+version: 7.2
+author: A5H73Y
+softdepend: [Vault]
+description: Control your chat.
+commands:
+  noswear:
+    aliases: [ns]
+    description: NoSwear commands
