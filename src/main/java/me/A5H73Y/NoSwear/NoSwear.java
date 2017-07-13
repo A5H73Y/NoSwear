@@ -1,4 +1,4 @@
-package A5H73Y.NoSwear;
+package me.A5H73Y.NoSwear;
 
 import java.io.File;
 import java.io.IOException;
@@ -7,7 +7,6 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import A5H73Y.NoSwear.Updater.UpdateResult;
 import net.milkbowl.vault.economy.Economy;
 
 import org.bukkit.Bukkit;
@@ -77,7 +76,7 @@ public class NoSwear extends JavaPlugin {
 						return false;
 
 					if (args.length != 2){
-						sender.sendMessage(NOSWEAR + "Invalid syntax: /ns add (word)");
+						sender.sendMessage(getPrefix() + "Invalid syntax: /ns add (word)");
 						return false;
 					}
 
@@ -88,7 +87,7 @@ public class NoSwear extends JavaPlugin {
 						return false;
 
 					if (args.length != 2){
-						sender.sendMessage(NOSWEAR + "Invalid syntax: /ns delete (word)");
+						sender.sendMessage(getPrefix() + "Invalid syntax: /ns delete (word)");
 						return false;
 					}
 
@@ -99,7 +98,7 @@ public class NoSwear extends JavaPlugin {
 						return false;
 
 					if (args.length != 2){
-						sender.sendMessage(NOSWEAR + "Invalid syntax: /ns mute (player)");
+						sender.sendMessage(getPrefix() + "Invalid syntax: /ns mute (player)");
 						return false;
 					}
 
@@ -110,7 +109,7 @@ public class NoSwear extends JavaPlugin {
 						return false;
 
 					if (args.length != 2){
-						sender.sendMessage(NOSWEAR + "Invalid syntax: /ns unmute (player)");
+						sender.sendMessage(getPrefix() + "Invalid syntax: /ns unmute (player)");
 						return false;
 					}
 
@@ -121,7 +120,7 @@ public class NoSwear extends JavaPlugin {
 						return false;
 
 					if (args.length != 2){
-						sender.sendMessage(NOSWEAR + "Invalid syntax: /ns addwhite (word)");
+						sender.sendMessage(getPrefix() + "Invalid syntax: /ns addwhite (word)");
 						return false;
 					}
 
@@ -132,7 +131,7 @@ public class NoSwear extends JavaPlugin {
 						return false;
 
 					if (args.length != 2){
-						sender.sendMessage(NOSWEAR + "Invalid syntax: /ns delwhite (word)");
+						sender.sendMessage(getPrefix() + "Invalid syntax: /ns delwhite (word)");
 						return false;
 					}
 
@@ -194,10 +193,10 @@ public class NoSwear extends JavaPlugin {
 					reloadConfig();
 					setupSettings();
 					saveWords();
-					sender.sendMessage(NOSWEAR + "Config Reloaded!");
+					sender.sendMessage(getPrefix() + "Config Reloaded!");
 
 				} else if (args[0].equalsIgnoreCase("cmds")) {
-					sender.sendMessage("-- " + NOSWEAR + "--");
+					sender.sendMessage("-- " + getPrefix() + "--");
 					if (sender.hasPermission(PERM_ADMIN)){
 						sender.sendMessage(ChatColor.DARK_AQUA + "/ns " + ChatColor.AQUA + "add " + ChatColor.YELLOW + "(word)" + ChatColor.BLACK + " : " + ChatColor.WHITE + "Add the word to the blocked list");
 						sender.sendMessage(ChatColor.DARK_AQUA + "/ns " + ChatColor.AQUA + "del " + ChatColor.YELLOW + "(word)" + ChatColor.BLACK + " : " + ChatColor.WHITE + "Delete the word from the blocked list");
@@ -206,22 +205,22 @@ public class NoSwear extends JavaPlugin {
 						sender.sendMessage(ChatColor.DARK_AQUA + "/ns " + ChatColor.AQUA + "addwhite " + ChatColor.YELLOW + "(word)" + ChatColor.BLACK + " : " + ChatColor.WHITE + "Add the word to the whitelist");
 						sender.sendMessage(ChatColor.DARK_AQUA + "/ns " + ChatColor.AQUA + "delwhite " + ChatColor.YELLOW + "(word)" + ChatColor.BLACK + " : " + ChatColor.WHITE + "Delete the word from the whitelist");
 						sender.sendMessage(ChatColor.DARK_AQUA + "/ns " + ChatColor.AQUA + "list" + ChatColor.BLACK + " : " + ChatColor.WHITE + "Display a list of the blocked words");
-						sender.sendMessage(ChatColor.DARK_AQUA + "/ns " + ChatColor.AQUA + "muted " + ChatColor.BLACK + " : " + ChatColor.WHITE + "Display a list of all the muted users");
+						sender.sendMessage(ChatColor.DARK_AQUA + "/ns " + ChatColor.AQUA + "muted" + ChatColor.BLACK + " : " + ChatColor.WHITE + "Display a list of all the muted users");
 						sender.sendMessage(ChatColor.DARK_AQUA + "/ns " + ChatColor.AQUA + "settings" + ChatColor.BLACK + " : " + ChatColor.WHITE + "Display the NoSwear settings");
 						sender.sendMessage(ChatColor.DARK_AQUA + "/ns " + ChatColor.AQUA + "reload" + ChatColor.BLACK + " : " + ChatColor.WHITE + "Reload the NoSwear config");
 					}
 					sender.sendMessage(ChatColor.DARK_AQUA + "/ns " + ChatColor.AQUA + "warns" + ChatColor.BLACK + " : " + ChatColor.WHITE + "Display how many warns you have remaining");
-					sender.sendMessage(ChatColor.DARK_AQUA + "/ns " + ChatColor.AQUA + "clear " + ChatColor.BLACK + " : " + ChatColor.WHITE + "Clear your chat.");
+					sender.sendMessage(ChatColor.DARK_AQUA + "/ns " + ChatColor.AQUA + "clear" + ChatColor.BLACK + " : " + ChatColor.WHITE + "Clear your chat.");
 					sender.sendMessage(ChatColor.DARK_AQUA + "/ns " + ChatColor.AQUA + "perms" + ChatColor.BLACK + " : " + ChatColor.WHITE + "Display the senders permissions");
 					sender.sendMessage(ChatColor.DARK_AQUA + "/ns " + ChatColor.AQUA + "cmds" + ChatColor.BLACK + " : " + ChatColor.WHITE + "Display the commands list");
 					sender.sendMessage("--------------");
 
 				} else {
-					sender.sendMessage(NOSWEAR + "Unknown command!");
+					sender.sendMessage(getPrefix() + "Unknown command!");
 					sender.sendMessage(ChatColor.DARK_AQUA + "/ns " + ChatColor.AQUA + "cmds" + ChatColor.GRAY + " - " + ChatColor.WHITE + "To display all NoSwear commands.");
 				}
 			} else {
-				sender.sendMessage(NOSWEAR + "Plugin created by " + ChatColor.AQUA + "A5H73Y");
+				sender.sendMessage(getPrefix() + VERSION + " installed. Plugin created by " + ChatColor.AQUA + "A5H73Y");
 				sender.sendMessage(ChatColor.DARK_AQUA + "/ns " + ChatColor.AQUA + "cmds" + ChatColor.GRAY + " - " + ChatColor.WHITE + "To display all NoSwear commands.");
 			}
 		}
@@ -353,7 +352,7 @@ public class NoSwear extends JavaPlugin {
 		
 		try {
 			Updater updater = new Updater(this, 38329, this.getFile(), Updater.UpdateType.DEFAULT, true);
-			if (updater.getResult() == UpdateResult.UPDATE_AVAILABLE) {
+			if (updater.getResult() == Updater.UpdateResult.UPDATE_AVAILABLE) {
 				getLogger().info("New version available: " + updater.getLatestName());
 			}
 		} catch (Exception ex) {
@@ -424,7 +423,7 @@ public class NoSwear extends JavaPlugin {
 	}
 
     public static String getPrefix() {
-        return NOSWEAR;
+        return NoSwearMethods.colour(NOSWEAR);
     }
 
     public String getVersion() {

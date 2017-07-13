@@ -1,4 +1,4 @@
-package A5H73Y.NoSwear;
+package me.A5H73Y.NoSwear;
 
 import org.bukkit.BanList.Type;
 import org.bukkit.Bukkit;
@@ -33,7 +33,7 @@ public class NoSwearMethods {
 	}
 
 	public String getMessage(Player player, String message) {
-		return noSwear.NOSWEAR + colour(
+		return  colour(noSwear.getPrefix() +
 				noSwear.getConfig().getString(message).replace("%PLAYER%", player.getName()));
 	}
 
@@ -99,13 +99,13 @@ public class NoSwearMethods {
 	private void notifyOps(Player player, WarningType type) {
 		for (Player players : noSwear.getServer().getOnlinePlayers())
 			if (players.isOp())
-				players.sendMessage(noSwear.NOSWEAR + player.getName() + " tried " + type.toString());
+				players.sendMessage(noSwear.getPrefix() + player.getName() + " tried " + type.toString());
 	}
 
     protected void sendMessageToOps(String playerName, String message) {
         for (Player players : noSwear.getServer().getOnlinePlayers())
             if (players.isOp())
-                players.sendMessage(noSwear.NOSWEAR + playerName + " said: " + message);
+                players.sendMessage(noSwear.getPrefix() + playerName + " said: " + message);
     }
 
 	/**
@@ -118,13 +118,13 @@ public class NoSwearMethods {
 		word = word.toLowerCase();
 
 		if (noSwear.getBlockedWords().contains(word)){
-			sender.sendMessage(noSwear.NOSWEAR + "Word already added!");
+			sender.sendMessage(noSwear.getPrefix() + "Word already added!");
 			return;
 		}
 
 		noSwear.getBlockedWords().add(word);
 		noSwear.saveWords();
-		sender.sendMessage(noSwear.NOSWEAR + ChatColor.AQUA + word + ChatColor.WHITE + " has been added.");
+		sender.sendMessage(noSwear.getPrefix() + ChatColor.AQUA + word + ChatColor.WHITE + " has been added.");
 	}
 
 	/**
@@ -137,13 +137,13 @@ public class NoSwearMethods {
 		word = word.toLowerCase();
 
 		if (!noSwear.getBlockedWords().contains(word)){
-			sender.sendMessage(noSwear.NOSWEAR + "Word is not in the list!");
+			sender.sendMessage(noSwear.getPrefix() + "Word is not in the list!");
 			return;
 		}
 
 		noSwear.getBlockedWords().remove(word);
 		noSwear.saveWords();
-		sender.sendMessage(noSwear.NOSWEAR + ChatColor.AQUA + word + ChatColor.WHITE + " has been removed.");
+		sender.sendMessage(noSwear.getPrefix() + ChatColor.AQUA + word + ChatColor.WHITE + " has been removed.");
 	}
 	
 	/**
@@ -156,13 +156,13 @@ public class NoSwearMethods {
 		word = word.toLowerCase();
 
 		if (noSwear.getWhiteWords().contains(word)){
-			sender.sendMessage(noSwear.NOSWEAR + "Word already whitelisted!");
+			sender.sendMessage(noSwear.getPrefix() + "Word already whitelisted!");
 			return;
 		}
 
 		noSwear.getWhiteWords().add(word);
 		noSwear.saveWords();
-		sender.sendMessage(noSwear.NOSWEAR + ChatColor.AQUA + word + ChatColor.WHITE + " has been whitelisted.");
+		sender.sendMessage(noSwear.getPrefix() + ChatColor.AQUA + word + ChatColor.WHITE + " has been whitelisted.");
 	}
 
 	/**
@@ -175,13 +175,13 @@ public class NoSwearMethods {
 		word = word.toLowerCase();
 
 		if (!noSwear.getWhiteWords().contains(word)){
-			sender.sendMessage(noSwear.NOSWEAR + "Word is not in the whitelist!");
+			sender.sendMessage(noSwear.getPrefix() + "Word is not in the whitelist!");
 			return;
 		}
 
 		noSwear.getWhiteWords().remove(word);
 		noSwear.saveWords();
-		sender.sendMessage(noSwear.NOSWEAR + ChatColor.AQUA + word + ChatColor.WHITE + " has been removed from the whitelist.");
+		sender.sendMessage(noSwear.getPrefix() + ChatColor.AQUA + word + ChatColor.WHITE + " has been removed from the whitelist.");
 	}
 	
 	/**
@@ -192,17 +192,17 @@ public class NoSwearMethods {
 	 */
 	public void mutePlayer(CommandSender player, Player targetPlayer){
 		if (targetPlayer == null){
-			player.sendMessage(noSwear.NOSWEAR + "Could not find player!");
+			player.sendMessage(noSwear.getPrefix() + "Could not find player!");
 			return;
 		}
 
 		if (noSwear.getMuted().contains(targetPlayer.getName())){
-			player.sendMessage(noSwear.NOSWEAR + targetPlayer.getName() + " is already muted!");
+			player.sendMessage(noSwear.getPrefix() + targetPlayer.getName() + " is already muted!");
 			return;
 		}
 
 		mutePlayer(targetPlayer.getName());
-		player.sendMessage(noSwear.NOSWEAR + ChatColor.AQUA + targetPlayer.getName() + ChatColor.WHITE + " has been muted!");
+		player.sendMessage(noSwear.getPrefix() + ChatColor.AQUA + targetPlayer.getName() + ChatColor.WHITE + " has been muted!");
 	}
 
 	private void mutePlayer(String playerName){
@@ -223,19 +223,19 @@ public class NoSwearMethods {
 	 */
 	public void unmutePlayer(CommandSender player, Player targetPlayer) {
 		if (targetPlayer == null){
-			player.sendMessage(noSwear.NOSWEAR + "Could not find player!");
+			player.sendMessage(noSwear.getPrefix() + "Could not find player!");
 			return;
 		}
 
 		if (!noSwear.getMuted().contains(targetPlayer.getName())){
-			player.sendMessage(noSwear.NOSWEAR + targetPlayer.getName() + " is not muted!");
+			player.sendMessage(noSwear.getPrefix() + targetPlayer.getName() + " is not muted!");
 			return;
 		}
 
 		noSwear.getMuted().remove(targetPlayer.getName());
 		noSwear.getConfig().set("Muted", noSwear.getMuted());
 		noSwear.saveConfig();
-		player.sendMessage(noSwear.NOSWEAR + ChatColor.AQUA + targetPlayer.getName() + ChatColor.WHITE + " has been unmuted!");
+		player.sendMessage(noSwear.getPrefix() + ChatColor.AQUA + targetPlayer.getName() + ChatColor.WHITE + " has been unmuted!");
 	}
 
 	/**
@@ -300,7 +300,7 @@ public class NoSwearMethods {
                         .replace("%DEFAULT%", String.valueOf(getDefaultWarnings()))));
     }
 
-    public final String colour(String S) {
+    public static String colour(String S) {
         return ChatColor.translateAlternateColorCodes('&', S);
     }
 

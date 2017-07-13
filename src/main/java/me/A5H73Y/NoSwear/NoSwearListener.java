@@ -1,10 +1,10 @@
-package A5H73Y.NoSwear;
+package me.A5H73Y.NoSwear;
 
 import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import A5H73Y.NoSwear.NoSwearMethods.WarningType;
+import me.A5H73Y.NoSwear.NoSwearMethods.WarningType;
 
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -114,9 +114,8 @@ public class NoSwearListener implements Listener {
 			if (noSwear.getNoSwearMethods().playerPunish(player, WarningType.SWEARING))
 				chat.setCancelled(true);
 
-			if (noSwear.SET_MESSAGE_OP) {
-			    noSwear.getNoSwearMethods().sendMessageToOps(player.getName(), message);
-            }
+			if (noSwear.SET_MESSAGE_OP)
+			    noSwear.getNoSwearMethods().sendMessageToOps(player.getName(), chat.getMessage());
 
 			if (noSwear.SET_REPLACE)
 				chat.setMessage(message);

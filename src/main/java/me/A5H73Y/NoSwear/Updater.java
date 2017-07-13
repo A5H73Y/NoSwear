@@ -1,4 +1,4 @@
-package A5H73Y.NoSwear;
+package me.A5H73Y.NoSwear;
 
 import java.io.*;
 import java.net.MalformedURLException;
