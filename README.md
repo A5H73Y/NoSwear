@@ -1,19 +1,16 @@
-![alt text](http://i.imgur.com/nDvcxDa.jpg "NoSwear")
+<p align="center"><img src="http://i.imgur.com/nDvcxDa.jpg" alt="NoSwear Logo"></p>
 
-# NoSwear 
+[![dev.bukkit](https://img.shields.io/badge/tutorials-dev.bukkit-blue.svg)](https://dev.bukkit.org/projects/a5h73y)
+[![license: MIT](https://img.shields.io/badge/license-MIT-lightgrey.svg)](https://tldrlegal.com/license/mit-license)
 
 NoSwear is the ultimate chat control plugin.<p />
-[![License: CC BY-NC-SA 4.0](https://img.shields.io/badge/License-CC%20BY--NC--SA%204.0-lightgrey.svg)](http://creativecommons.org/licenses/by-nc-sa/4.0/)
+First released in April 2012, and has been updated since. NoSwear is now open source, allowing you to contribute ideas and enhancements, or create your own spin on the plugin.<p />
+
+[<img src="https://i.imgur.com/VoFdY6y.png" alt="Discord Support">](https://discord.gg/f5pzDzu)<p />
 
 ## Installation
-* Install [CraftBukkit](http://wiki.bukkit.org/Setting_up_a_server) or [Spigot](https://www.spigotmc.org/threads/buildtools-updates-information.42865/).
-* Download NoSwear from [BukkitDev](https://dev.bukkit.org/projects/a5h73y/files).
+* Install [Spigot](https://www.spigotmc.org/threads/buildtools-updates-information.42865/).
+* Download NoSwear from [dev.bukkit.org](https://dev.bukkit.org/projects/a5h73y/files).
 * Place the NoSwear.jar into the 'plugins' folder of the server.
 * Start your server and check the server logs to ensure the plugin started successfully.
-
-## Tips
-* Check that your server version matches the officially supported versions of the plugin.
-* Don't use tabs in the configuration files (Bukkit doesn't like it.)
 * Check the config.yml and configure it to your preference before fully implementing the plugin.
-
-[![Creative Commons License](https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png)](http://creativecommons.org/licenses/by-nc-sa/4.0/)
