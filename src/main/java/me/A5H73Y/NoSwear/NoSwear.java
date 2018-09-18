@@ -9,6 +9,7 @@ import java.util.List;
 
 import net.milkbowl.vault.economy.Economy;
 
+import org.bstats.bukkit.Metrics;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -44,9 +45,9 @@ public class NoSwear extends JavaPlugin {
     boolean SET_OLD_DETECT;
     boolean SET_INCLUDE_OPS;
     boolean SET_MESSAGE_OP;
-    int 	SET_CAPSBLOCKER_PERCENT;
+    int     SET_CAPSBLOCKER_PERCENT;
     int     SET_SPAMBLOCKER_DELAY;
-    String 	SET_STRICT_REGEX;
+    String  SET_STRICT_REGEX;
 
     private File wordFile;
     private FileConfiguration wordData;
@@ -64,6 +65,8 @@ public class NoSwear extends JavaPlugin {
         setupUpdater();
         setupConfig();
         setupVault();
+
+        new Metrics(this);
 
         getLogger().info(VERSION + " enabled!");
     }
@@ -400,7 +403,7 @@ public class NoSwear extends JavaPlugin {
         }
     }
 
-	/* Getters & Setters */
+    /* Getters & Setters */
 
     protected boolean hasPermission(CommandSender sender, String permission) {
         if (!sender.hasPermission(permission)) {
