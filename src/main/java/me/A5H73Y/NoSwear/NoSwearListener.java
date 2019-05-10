@@ -5,7 +5,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import me.A5H73Y.NoSwear.NoSwearMethods.WarningType;
-
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -14,6 +13,8 @@ import org.bukkit.event.block.SignChangeEvent;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
+
+import static me.A5H73Y.NoSwear.NoSwear.PERM_BYPASS;
 
 public class NoSwearListener implements Listener {
 
@@ -30,8 +31,9 @@ public class NoSwearListener implements Listener {
 
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onPlayerChat(AsyncPlayerChatEvent chat) {
-        if (chat.getPlayer().hasPermission(noSwear.PERM_BYPASS) && !noSwear.SET_INCLUDE_OPS)
+        if (chat.getPlayer().hasPermission(PERM_BYPASS) && !noSwear.SET_INCLUDE_OPS) {
             return;
+        }
 
         Player player = chat.getPlayer();
         String message = chat.getMessage().toLowerCase();
@@ -65,11 +67,13 @@ public class NoSwearListener implements Listener {
             }
         }
 
-        if (noSwear.SET_STRICT)
+        if (noSwear.SET_STRICT) {
             message = message.replaceAll(noSwear.SET_STRICT_REGEX, "");
+        }
 
-        if (noSwear.getConfig().getBoolean("OnSwear.StrictDetection.RepeatedLetters"))
+        if (noSwear.getConfig().getBoolean("OnSwear.StrictDetection.RepeatedLetters")) {
             message = message.replaceAll("([a-z])\\1+", "$1$1");
+        }
 
         boolean swore = false;
 
@@ -89,11 +93,13 @@ public class NoSwearListener implements Listener {
                             }
                         }
 
-                        if (isPardoned)
+                        if (isPardoned) {
                             continue;
+                        }
 
-                        if (noSwear.SET_REPLACE)
+                        if (noSwear.SET_REPLACE) {
                             message = message.replace(blockedWord, noSwear.getNoSwearMethods().replaceSwearWord(blockedWord));
+                        }
 
                         swore = true;
                     }
@@ -111,14 +117,17 @@ public class NoSwearListener implements Listener {
         }
 
         if (swore) {
-            if (noSwear.getNoSwearMethods().playerPunish(player, WarningType.SWEARING))
+            if (noSwear.getNoSwearMethods().playerPunish(player, WarningType.SWEARING)) {
                 chat.setCancelled(true);
+            }
 
-            if (noSwear.SET_MESSAGE_OP)
+            if (noSwear.SET_MESSAGE_OP) {
                 noSwear.getNoSwearMethods().sendMessageToOps(player.getName(), chat.getMessage());
+            }
 
-            if (noSwear.SET_REPLACE)
+            if (noSwear.SET_REPLACE) {
                 chat.setMessage(message);
+            }
 
             return;
         }
@@ -145,8 +154,9 @@ public class NoSwearListener implements Listener {
             }
         }
 
-        if (!noSwear.SET_SPAMBLOCKER)
+        if (!noSwear.SET_SPAMBLOCKER) {
             return;
+        }
 
         if (message.equals(lastMessage.get(player.getName()))) {
             noSwear.getNoSwearMethods().playerPunish(player, WarningType.SPAMMING);
@@ -170,28 +180,33 @@ public class NoSwearListener implements Listener {
 
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent event) {
-        if (noSwear.getConfig().getBoolean("OnJoin.WelcomeMessage"))
+        if (noSwear.getConfig().getBoolean("OnJoin.WelcomeMessage")) {
             event.getPlayer().sendMessage(noSwear.getNoSwearMethods().getMessage(event.getPlayer(), "Message.Join"));
+        }
 
-        if (noSwear.getConfig().getBoolean("OnJoin.WarningsLeft"))
+        if (noSwear.getConfig().getBoolean("OnJoin.WarningsLeft")) {
             noSwear.getNoSwearMethods().displayRemainingWarnings(event.getPlayer());
+        }
     }
 
     @EventHandler(priority = EventPriority.MONITOR)
     public void onCommandPreprocess(PlayerCommandPreprocessEvent event) {
-        if (!noSwear.getConfig().getBoolean("Block.IncludeCommands"))
+        if (!noSwear.getConfig().getBoolean("Block.IncludeCommands")) {
             return;
+        }
 
-        if (event.getPlayer().hasPermission(noSwear.PERM_BYPASS) && !noSwear.SET_INCLUDE_OPS)
+        if (event.getPlayer().hasPermission(PERM_BYPASS) && !noSwear.SET_INCLUDE_OPS) {
             return;
+        }
 
         String[] args = event.getMessage().split(" ");
 
         for (String arg : args) {
             arg = arg.toLowerCase();
 
-            if (noSwear.SET_STRICT)
+            if (noSwear.SET_STRICT) {
                 arg = arg.replaceAll(noSwear.SET_STRICT_REGEX, "");
+            }
 
             if (noSwear.getBlockedWords().contains(arg)) {
                 noSwear.getNoSwearMethods().playerPunish(event.getPlayer(), WarningType.SWEARING);
@@ -204,10 +219,12 @@ public class NoSwearListener implements Listener {
             return;
 
         if (lastMessageSent.containsKey(event.getPlayer().getName())) {
-            Long timeRemaining = lastMessageSent.get(event.getPlayer().getName()) + (noSwear.SET_SPAMBLOCKER_DELAY * 1000) - System.currentTimeMillis();
+            Long timeRemaining = lastMessageSent.get(event.getPlayer().getName())
+                    + (noSwear.SET_SPAMBLOCKER_DELAY * 1000) - System.currentTimeMillis();
 
             if (timeRemaining > 0) {
-                event.getPlayer().sendMessage(noSwear.getNoSwearMethods().getMessage(event.getPlayer(), "Message.SpamWait").replace("%SECONDS%", String.valueOf((timeRemaining.intValue() / 1000) + 1)));
+                event.getPlayer().sendMessage(noSwear.getNoSwearMethods().getMessage(event.getPlayer(), "Message.SpamWait")
+                        .replace("%SECONDS%", String.valueOf((timeRemaining.intValue() / 1000) + 1)));
                 event.setCancelled(true);
                 return;
             }
@@ -218,17 +235,20 @@ public class NoSwearListener implements Listener {
 
     @EventHandler(priority = EventPriority.MONITOR)
     public void onSignCreate(SignChangeEvent event) {
-        if (!noSwear.getConfig().getBoolean("Block.IncludeSigns"))
+        if (!noSwear.getConfig().getBoolean("Block.IncludeSigns")) {
             return;
+        }
 
-        if (event.getPlayer().hasPermission(noSwear.PERM_BYPASS) && !noSwear.SET_INCLUDE_OPS)
+        if (event.getPlayer().hasPermission(PERM_BYPASS) && !noSwear.SET_INCLUDE_OPS) {
             return;
+        }
 
         for (String line : event.getLines()) {
             line = line.toLowerCase().replace(" ", "");
 
-            if (noSwear.SET_STRICT)
+            if (noSwear.SET_STRICT) {
                 line = line.replaceAll(noSwear.SET_STRICT_REGEX, "");
+            }
 
             for (String blockedWord : noSwear.getBlockedWords()) {
                 if (line.contains(blockedWord)) {

@@ -23,18 +23,19 @@ public class NoSwearMethods {
     private void sendWarningMessage(Player player, WarningType type) {
         String warning = "Message.Warn";
 
-        if (type.equals(WarningType.ADVERTISING))
+        if (type.equals(WarningType.ADVERTISING)) {
             warning = "Message.Advertise";
 
-        else if (type.equals(WarningType.SPAMMING))
+        } else if (type.equals(WarningType.SPAMMING)) {
             warning = "Message.Spam";
+        }
 
         player.sendMessage(getMessage(player, warning));
     }
 
     public String getMessage(Player player, String message) {
-        return  colour(noSwear.getPrefix() +
-                noSwear.getConfig().getString(message).replace("%PLAYER%", player.getName()));
+        return colour(noSwear.getPrefix()
+                + noSwear.getConfig().getString(message).replace("%PLAYER%", player.getName()));
     }
 
     /**
@@ -46,8 +47,9 @@ public class NoSwearMethods {
         int remainingWarnings = getRemainingWarnings(player.getName());
         boolean cancel = noSwear.SET_CANCEL;
 
-        if (noSwear.SET_NOTIFY_OP)
+        if (noSwear.SET_NOTIFY_OP) {
             notifyOps(player, type);
+        }
 
         //Remaining warnings
         if (remainingWarnings >= 1) {
@@ -61,12 +63,14 @@ public class NoSwearMethods {
         }
 
         //Swearing depleted
-        if (noSwear.getConfig().getBoolean("OnWarningsDeplete.RestoreWarnings"))
+        if (noSwear.getConfig().getBoolean("OnWarningsDeplete.RestoreWarnings")) {
             setRemainingWarnings(player.getName(), getDefaultWarnings());
+        }
 
         if (noSwear.getConfig().getBoolean("OnWarningsDeplete.Command.Enabled")) {
             noSwear.getServer().dispatchCommand(noSwear.getServer().getConsoleSender(),
-                    noSwear.getConfig().getString("OnWarningsDeplete.Command.Execute").replace("%PLAYER%", player.getName()));
+                    noSwear.getConfig().getString("OnWarningsDeplete.Command.Execute")
+                            .replace("%PLAYER%", player.getName()));
         }
 
         chargePlayer(player);
@@ -97,15 +101,19 @@ public class NoSwearMethods {
     }
 
     private void notifyOps(Player player, WarningType type) {
-        for (Player players : noSwear.getServer().getOnlinePlayers())
-            if (players.isOp())
+        for (Player players : noSwear.getServer().getOnlinePlayers()) {
+            if (players.isOp()) {
                 players.sendMessage(noSwear.getPrefix() + player.getName() + " tried " + type.toString());
+            }
+        }
     }
 
     protected void sendMessageToOps(String playerName, String message) {
-        for (Player players : noSwear.getServer().getOnlinePlayers())
-            if (players.isOp())
+        for (Player players : noSwear.getServer().getOnlinePlayers()) {
+            if (players.isOp()) {
                 players.sendMessage(noSwear.getPrefix() + playerName + " said: " + message);
+            }
+        }
     }
 
     /**
@@ -202,7 +210,8 @@ public class NoSwearMethods {
         }
 
         mutePlayer(targetPlayer.getName());
-        player.sendMessage(noSwear.getPrefix() + ChatColor.AQUA + targetPlayer.getName() + ChatColor.WHITE + " has been muted!");
+        player.sendMessage(noSwear.getPrefix() + ChatColor.AQUA
+                + targetPlayer.getName() + ChatColor.WHITE + " has been muted!");
     }
 
     private void mutePlayer(String playerName) {
@@ -273,8 +282,9 @@ public class NoSwearMethods {
     }
 
     private void chargePlayer(Player player) {
-        if (!noSwear.SET_ECONOMY)
+        if (!noSwear.SET_ECONOMY) {
             return;
+        }
 
         double amount = noSwear.getConfig().getDouble("OnWarningsDeplete.Economy.ChargeAmount");
         if (amount > 0) {

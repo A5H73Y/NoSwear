@@ -1,6 +1,12 @@
 package me.A5H73Y.NoSwear;
 
-import java.io.*;
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
@@ -230,8 +236,8 @@ public class Updater {
 
 		YamlConfiguration config = new YamlConfiguration();
 		config.options().header("This configuration file affects all plugins using the Updater system (version 2+ - http://forums.bukkit.org/threads/96681/ )" + '\n'
-				+ "If you wish to use your API key, read http://wiki.bukkit.org/ServerMods_API and place it below." + '\n'
-				+ "Some updating systems will not adhere to the disabled value, but these may be turned off in their plugin's configuration.");
+			+ "If you wish to use your API key, read http://wiki.bukkit.org/ServerMods_API and place it below." + '\n'
+			+ "Some updating systems will not adhere to the disabled value, but these may be turned off in their plugin's configuration.");
 		config.addDefault(API_KEY_CONFIG_KEY, API_KEY_DEFAULT);
 		config.addDefault(DISABLE_CONFIG_KEY, DISABLE_DEFAULT);
 
